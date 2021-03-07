@@ -150,10 +150,9 @@ def compute_facets(
     with open(tmp_vertex_fname, "w") as f:
         f.write(vertices_string)
 
-    f = open(tmp_facet_fname, "w")
-    cmd = f"{qhull_binary_path} n < {tmp_vertex_fname}"
-    subprocess.run(cmd, shell=True, stdout=f)  # Security risk w/shell=True?
-    f.close()
+    with open(tmp_facet_fname, "w") as f:
+        cmd = f"{qhull_binary_path} n < {tmp_vertex_fname}"
+        subprocess.run(cmd, shell=True, stdout=f)  # Security risk w/shell=True?
 
     A, b = _read_facets(tmp_facet_fname)
 
